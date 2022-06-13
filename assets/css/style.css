@@ -46,7 +46,7 @@ header h1{
     transition-duration: 3s , 2s , 3s ,2s,0.3s,0.4s;
     transition-timing-function: ease-in;
 }
-.active:hover{
+.active, .searched-city-list li:hover{
 background:linear-gradient(360deg, white, green);
 border-radius: 10%;
 border: 2px solid black;
@@ -132,6 +132,10 @@ cursor: pointer;
     padding: 10px 15px;
     text-align: center;
     border-radius: 10px;
+    font-weight: bold;
+  }
+
+  .future-forcast h3{
     font-weight: bold;
   }
 
