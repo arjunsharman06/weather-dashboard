@@ -126,6 +126,15 @@ cursor: pointer;
     line-height: 3.1em;
   }
 
+  /* UV Index */
+  .uv{ 
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+
   @media (max-width: 767.98px) { 
       *{
           font-size: 14px;
