@@ -18,7 +18,7 @@ header h1{
     animation-name: heading;
     animation-duration:4s;
     animation-timing-function: ease-in;
-     /* animation-iteration-count: infinite; */
+     animation-iteration-count: infinite;
     animation-fill-mode: both;
 }
 
@@ -67,7 +67,7 @@ cursor: pointer;
     padding:0px;
     height: 60vh;
     overflow: auto;
-     scroll-behavior: smooth;
+    scroll-behavior: smooth;   
 }
 
 .searched-city{
@@ -139,13 +139,20 @@ cursor: pointer;
     font-weight: bold;
   }
 
+  .searched-city i{
+    margin-left: 12px;    
+  }
+
+  .searched-city i:hover {
+    font-size: 20px;
+    transition: all .3s ease-in-out;
+  }
+
   @media (max-width: 767.98px) { 
       *{
           font-size: 14px;
       }
-      /* .forcast li{
-       background-color: #33475a;
-       height: 150px;
-       width: 80%;
-    } */
+      .searched-city-list{
+        height: 40vh;
+      }
   }

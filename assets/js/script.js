@@ -26,10 +26,11 @@ var init = () => {
   searchedCityArray = getLocal("Cities");
   searchedCityArray = searchedCityArray === null ? searchedCityArray = [] : searchedCityArray;
   searchedCities();
-  if(searchedCityArray.length > 0){
+  if (searchedCityArray.length > 0) {
     longLatitude(searchedCityArray[0]);
-  }else{
-    currentDayEl.innerHTML ="No Data to show";
+  } else {
+    currentDayEl.innerHTML = "No Data to show";
+    parentForcasteEl.innerHTML = "<li>No Data to show</li>";
   }
 }
 
@@ -37,16 +38,22 @@ var init = () => {
 var searchCity = function (event) {
   event.preventDefault();
   let cityName = this.querySelector("input");
-
-  if (isEmptyOrNull(cityName)) {
-    let capitalName = titleCase(cityName.value)
-    searchedCityArray.push(capitalName);
-    let btn = this.querySelector("#btn-search");
-    btn.classList.add("active");
-    longLatitude(capitalName);
+  let btn = this.querySelector("#btn-search");
+  btn.classList.add("active");
+ 
+  if (isEmptyOrNull(cityName)) { 
+    let capitalName = titleCase(cityName.value);
+    if(searchedCityArray.indexOf(capitalName) !== -1){
+      searchedCityArray.splice(searchedCityArray.indexOf(capitalName),1);
+      searchedCityArray.unshift(capitalName);  
+      var duplicateLIEl = document.querySelector(`.searched-city[data-city="${capitalName}"]`);               
+      duplicateLIEl.click();
+    }else{
+    searchedCityArray.unshift(capitalName);  
+    longLatitude(capitalName);     
+    }
 
     searchedCities();
-
     // Resetting the value of the input
     cityName.value = "";
 
@@ -57,6 +64,7 @@ var searchCity = function (event) {
     setTimeout(() => {
       btn.classList.remove("active");
     }, 1000);
+
   } else {
     alert("Please input the city name");
   }
@@ -64,9 +72,26 @@ var searchCity = function (event) {
 
 // City selected from the list 
 var selectedFromList = (event) => {
+  if (event.target != null) {
+    var cityName = "";
+    var element = event.target.nodeName.toLowerCase();
 
-  if (event.target != null && event.target.innerText != "") {
-    longLatitude(event.target.innerText);
+    if (element === "i") {
+      searchedCityArray = [];
+      cityName = event.target.parentNode.getAttribute("data-city");
+
+      cityName = titleCase(cityName);
+      searchedCityArray = getLocal("Cities");
+      if (searchedCityArray != null && searchedCityArray.indexOf(cityName) !== -1) {
+        searchedCityArray.splice(searchedCityArray.indexOf(cityName),1);
+        saveInLocal("Cities", searchedCityArray);;
+        searchedCities();
+        init();
+      }      
+    } else {
+      cityName = event.target.innerText;
+      longLatitude(cityName);
+    }
   }
 }
 // Api Call to find the Longitude & Latitude
@@ -91,8 +116,8 @@ var longLatitude = (cityName) => {
 var totalWeather = (longitude, latitude, cityName) => {
   let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude={part}&units=imperial&appid=${key}`;
   apiFunction(url)
-    .then(data => {      
-      if (data != null) {        
+    .then(data => {
+      if (data != null) {
         // call current Weather
         currentWeather(data["current"], cityName);
 
@@ -111,7 +136,7 @@ var currentWeather = (weatherObject, name) => {
 
   // Adding the city name
   cityName.classList = "display-5",
-    cityName.innerHTML = `<h3>${name}&nbsp(${currentDate})<img src="http://openweathermap.org/img/wn/${icon}@2x.png" height="50vh"></img></h3`;
+  cityName.innerHTML = `<h3>${name}&nbsp(${currentDate})<img src="http://openweathermap.org/img/wn/${icon}@2x.png" height="50vh"></img></h3`;
 
   currentDayEl.innerHTML = "";
   currentDayEl.appendChild(cityName);
@@ -192,14 +217,13 @@ var forcastWeather = (weatherObject) => {
 
 // API calls
 const apiFunction = async (url) => {
-  debugger;
   let response = await fetch(`${url}`);
   if (response.ok) {
     let data = response.json();
     return data;
   } else {
     return false;
-  }  
+  }
 };
 
 // Capitilising the first letter of each word
@@ -224,13 +248,13 @@ var isEmptyOrNull = (element) => {
 
 // List of all Searched cities
 var searchedCities = () => {
-
   if (searchedCityArray != null && searchedCityArray.length > 0) {
     searchedList.innerHTML = "";
     searchedCityArray.forEach((element) => {
       // Creating the tab of the city searched in the list 
       var cityTab = document.createElement("li");
-      cityTab.textContent = element;
+      cityTab.setAttribute("data-city",element); 
+      cityTab.innerHTML = `<label>${element}</label><i "data-city"='${element}' class="oi oi-trash"></i>`;
       cityTab.classList.add("searched-city");
       searchedList.appendChild(cityTab);
     });
@@ -242,7 +266,7 @@ var searchedCities = () => {
 // Save in Local Storage
 var saveInLocal = (key, value) => {
   if (key != null && (value != null || value != "")) {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key.toLowerCase(), JSON.stringify(value));
   } else {
     alert("Value not Saved in Local Storage");
     return false;
@@ -252,7 +276,7 @@ var saveInLocal = (key, value) => {
 // Get from Local Storage
 var getLocal = (key) => {
   if (key != null) {
-    return JSON.parse(localStorage.getItem(key));
+    return JSON.parse(localStorage.getItem(key.toLowerCase()));
   } else {
     alert("Provided Key is Wrong!! Cannot get data from the Local Storage!!")
     return false;
@@ -262,4 +286,5 @@ var getLocal = (key) => {
 // On Submit call
 searchEl.addEventListener("submit", searchCity);
 searchedList.addEventListener("click", selectedFromList);
+
 init();
