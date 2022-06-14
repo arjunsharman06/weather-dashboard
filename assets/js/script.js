@@ -1,3 +1,21 @@
+<<<<<<< HEAD
+=======
+// GIVEN a weather dashboard with form inputs
+// WHEN I search for a city
+// THEN I am presented with current and future conditions for that city and that city is added to the search history
+// WHEN I view current weather conditions for that city
+// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+// WHEN I view the UV index
+// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+// WHEN I view future weather conditions for that city
+// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+// WHEN I click on a city in the search history
+// THEN I am again presented with current and future conditions for that city
+//https://openweathermap.org/api/one-call-api
+// https://openweathermap.org/api
+
+
+>>>>>>> 7c01a38eb9ab04183584332223ae617948832b7c
 var key = 'ca6e92376d7a582a383532b7582df7c0';
 var maxCityLimit = '5';
 var searchEl = document.querySelector(".search-section");
@@ -83,7 +101,11 @@ var selectedFromList = (event) => {
 var longLatitude = (cityName) => {
 
   if (cityName !== undefined && cityName !== "") {
+<<<<<<< HEAD
     let url = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${maxCityLimit}&appid=${key}`;
+=======
+    let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${maxCityLimit}&appid=${key}`;
+>>>>>>> 7c01a38eb9ab04183584332223ae617948832b7c
     apiFunction(url)
       .then(data => {
         if (data != null) {
@@ -121,7 +143,11 @@ var currentWeather = (weatherObject, name) => {
 
   // Adding the city name
   cityName.classList = "display-5",
+<<<<<<< HEAD
   cityName.innerHTML = `<h3>${name}&nbsp(${currentDate})<img src="https://openweathermap.org/img/wn/${icon}@2x.png" height="50vh"></img></h3`;
+=======
+  cityName.innerHTML = `<h3>${name}&nbsp(${currentDate})<img src="http://openweathermap.org/img/wn/${icon}@2x.png" height="50vh"></img></h3`;
+>>>>>>> 7c01a38eb9ab04183584332223ae617948832b7c
 
   currentDayEl.innerHTML = "";
   currentDayEl.appendChild(cityName);
@@ -175,7 +201,11 @@ var forcastWeather = (weatherObject) => {
 
       // Date 
       forcastLi.classList = "col-6 col-lg-2 d-flex flex-column m-2 card";
+<<<<<<< HEAD
       headerInfo.innerHTML = `<h3>${currentDate}<br><br><img src="https://openweathermap.org/img/wn/${icon}@2x.png" height="50vh"></img></h3`;
+=======
+      headerInfo.innerHTML = `<h3>${currentDate}<br><br><img src="http://openweathermap.org/img/wn/${icon}@2x.png" height="50vh"></img></h3`;
+>>>>>>> 7c01a38eb9ab04183584332223ae617948832b7c
       forcastLi.appendChild(headerInfo);
 
       // Current Temp

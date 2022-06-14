@@ -1,0 +1,158 @@
+*{
+    margin: 0;
+    padding:0;
+    font-family: 'Roboto Slab', serif;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Header */
+header{
+    text-align: center;
+    background:linear-gradient(270deg,#2a2373,#3a6cc1);
+}
+
+header h1{
+    color: white;
+    text-shadow: 2px 1px 2px black;
+    animation-name: heading;
+    animation-duration:4s;
+    animation-timing-function: ease-in;
+     animation-iteration-count: infinite;
+    animation-fill-mode: both;
+}
+
+@keyframes heading{
+    0%   {color: white;font-weight: lighter;}
+    25%  {color: yellow;font-weight: bolder;}
+    50%  {color:burlywood;font-weight: lighter;}
+    100% {color: #3a6cc1;font-weight: bold;}
+}
+/* Header ENDS */
+
+/* Search Section Start*/
+.search-section h3{
+    font-weight: bold;
+    line-height: 1.1em;
+}
+
+.search-section form .btn{
+ width:100%;
+ padding:10px ;
+}
+
+.active{
+    transition-property: background-color,border-radius,box-shadow,font-weight,font-size;
+    transition-duration: 3s , 2s , 3s ,2s,0.3s,0.4s;
+    transition-timing-function: ease-in;
+}
+.active, .searched-city-list li:hover{
+background:linear-gradient(360deg, white, green);
+border-radius: 10%;
+border: 2px solid black;
+box-shadow: 1px 2px black;
+font-weight: bold;
+font-size:18px;
+cursor: pointer;
+}
+
+.horizontal-line{
+    border-top: 3px solid #686868;
+    margin: 15px 0;
+    width: 100%;;
+}
+
+.searched-city-list{
+    list-style: none;
+    padding:0px;
+    height: 60vh;
+    overflow: auto;
+    scroll-behavior: smooth;   
+}
+
+.searched-city{
+    background-color: #b7b7b7;
+    padding:10px 0px;
+    margin:8px;
+    border:3px solid #b7b7b7;
+    border-radius: 10px ;
+    text-align: center;
+    font-weight: bold;
+    transition-property: padding,font-size;
+    transition-duration: 0.3s , 0.4s;
+    box-shadow: 3px 3px 3px black;
+}
+
+.searched-city-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Current Temperature Card */
+  .current-day{
+      padding : 10px;
+      border:2px solid black;
+      border-radius: 10px;
+      transition-property: border;
+      transition-property: all;
+      transition-duration: 2s;
+  }
+
+  .current-day:hover{
+    border:4px solid rgb(39, 146, 173);
+    padding:-400px;
+  }
+
+  .current-day h3{
+      font-weight: bold;
+  }
+
+  .current-day h6{
+      line-height: 1.5em;
+  }
+
+  .forcast{
+      list-style: none;
+      color: white;
+      padding: 0px;
+      border-radius: 20%;
+     }
+
+  .forcast li{
+      background-color: #33475a;
+     height: 40vh;
+     }
+
+  .forcast li span{
+    line-height: 3.1em;
+  }
+
+  /* UV Index */
+  .uv{ 
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+
+  .future-forcast h3{
+    font-weight: bold;
+  }
+
+  .searched-city i{
+    margin-left: 12px;    
+  }
+
+  .searched-city i:hover {
+    font-size: 20px;
+    transition: all .3s ease-in-out;
+  }
+
+  @media (max-width: 767.98px) { 
+      *{
+          font-size: 14px;
+      }
+      .searched-city-list{
+        height: 40vh;
+      }
+  }
